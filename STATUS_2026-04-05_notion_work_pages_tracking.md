@@ -1,0 +1,92 @@
+# STATUS_2026-04-05_notion_work_pages_tracking.md
+
+## 本次變更
+- 在 Notion 頁面 `工作相關` 下建立追蹤資料庫 `工作相關 Page 追蹤`
+- 新增欄位：
+  - `頁面名稱`（Title）
+  - `編號`（Number）
+  - `已處理`（Checkbox）
+  - `頁面連結`（URL）
+- 依目前已讀到的工作相關一般頁面建立 4 筆追蹤列：
+  - `1 / 工作相關`
+  - `2 / LGIT hand over`
+  - `3 / LGIT system setup (HSMS)`
+  - `4 / LGIT Counterpart change`
+- 所有 `已處理` 初始值均設為 `false`
+- 在 `工作相關` 下新增整理用父頁：`工作相關_整理區`
+- 在整理區下新增 4 個分類資料夾頁：
+  - `00_總覽與索引`
+  - `01_LGIT 交接`
+  - `02_系統與法規`
+  - `03_對口與責任變更`
+- 依內容建立 4 篇整理後筆記並放入對應資料夾：
+  - `工作相關｜整理筆記`
+  - `LGIT hand over｜整理筆記`
+  - `LGIT system setup (HSMS)｜整理筆記`
+  - `LGIT Counterpart change｜整理筆記`
+- 將追蹤資料庫中對應的 4 筆 `已處理` 從 `false` 更新為 `true`
+
+## 驗證結果
+- 驗證方式：
+  - 回讀新資料庫 schema
+  - 回讀其中一筆新建立的追蹤列
+  - 回讀整理區父頁與分類資料夾頁
+  - 回讀至少一篇整理後筆記
+  - 回讀追蹤列的 `已處理` 狀態
+  - 再次遞迴回讀 `工作相關`、`LGIT hand over`、`LGIT system setup (HSMS)`、`LGIT Counterpart change` 四個原始 page，確認是否還有未發現子頁
+- 驗證結果：
+  - 資料庫 `工作相關 Page 追蹤` 已成功建立
+  - 資料庫包含 `頁面名稱 / 編號 / 已處理 / 頁面連結` 四個欄位
+  - 抽樣驗證第 1 筆資料：
+    - `頁面名稱 = 工作相關`
+    - `編號 = 1`
+    - `已處理 = false`
+    - `頁面連結 = https://www.notion.so/964037a84b174db1b5a549d0a51d9571`
+  - `工作相關_整理區` 已建立，且底下可見 4 個分類資料夾頁
+  - 抽樣驗證整理頁 `LGIT system setup (HSMS)｜整理筆記`：
+    - 位於 `02_系統與法規`
+    - 內容包含核心摘要、主要內容、關鍵人物、待辦與風險、原始頁面
+  - 抽樣驗證追蹤列 `LGIT system setup (HSMS)`：
+    - `已處理 = true`
+    - `編號 = 3`
+    - `頁面連結` 指回原始 Notion 頁面
+  - 再次遞迴盤點原始結構後，確認目前可直接讀到的原始文件頁仍為 4 個：
+    - `工作相關`
+    - `LGIT hand over`
+    - `LGIT system setup (HSMS)`
+    - `LGIT Counterpart change`
+  - 目前沒有再發現新的子頁分支，因此這 4 個原始 page 已全部完成標註與整理
+  - 二次清查 Notion 後，確認 `工作相關` 內嵌資料庫中實際還有更大的工作分支：
+    - `工作相關`
+    - `工作相關` 資料庫
+    - `CQE Update`
+    - `LGIT issue`
+  - `LGIT issue` 底下已驗證存在大量子頁，包含但不限於：
+    - `LGIT R&D questions`
+    - `2025/02/10 LGIT 4M change activities`
+    - `2025/02/06 [LGIT]Custom new compliance for Tungsten, Tellurium，Bismuth，Molybdenum, Indium`
+    - `2024/10/17 LGIT Shasta OpHS fail in LGIT`
+    - `2024/10/14 LGIT SCM visit Taipei office`
+    - `2024/06/25 VOD LGIT 希望跟我們開始研究`
+  - 結論修正：
+    - 先前「只有 4 個工作相關 page」的判斷只對頂層可見 page 成立
+    - 若以整個 `工作相關` 區塊來看，實際內容遠多於 4 頁，且已確認存在一個龐大的 `CQE Update > LGIT issue` 子樹
+
+## 目前限制
+- `工作相關` 底下的主要內容是一般 page，不是資料庫列，因此無法直接在原始 page 上加 true/false 欄位
+- 這次採用的是外掛式追蹤資料庫方案，不改原始 page 內容
+- 目前納入的是已直接讀到的 4 個主要 page；若後續還有更深層或新增 page，需要再補進追蹤資料庫與整理區
+- 整理頁是摘要與行動整理版本，不等同於逐字轉錄原始頁全部內容
+- 內嵌資料庫 `工作相關` 與 `工作相關 瀏覽模式` 的資料列，目前無法用現有 Notion MCP 直接完整枚舉；因此本次完成範圍定義為「所有可遞迴讀到的原始 page」
+- 雖然無法一次列出所有資料列，但已透過語意搜尋 + ancestor-path 驗證，確認 `LGIT issue` 與其子頁確實屬於 `工作相關` 區塊
+
+## 下一步
+- 若要持續處理，我可以直接：
+  - 以 `CQE Update > LGIT issue` 為下一批主軸，逐頁整理、標註並匯入 Obsidian
+  - 先按主題分批，例如：
+    - 品質/失效/FA
+    - 4M/PCN/Compliance
+    - R&D 問題與客戶技術詢問
+    - 拜訪/會議/供應商溝通
+  - 幫追蹤資料庫加排序或篩選 view，例如依 `編號` 排序、只看 `未處理`
+  - 進一步把整理頁改成更標準化的模板，例如 `背景 / 關鍵人物 / 行動項 / 風險 / 原始資料`
